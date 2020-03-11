@@ -6,7 +6,7 @@
 /*   By: jungeun <jungeun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:06:40 by jungeun           #+#    #+#             */
-/*   Updated: 2020/03/09 19:31:21 by jungeun          ###   ########.fr       */
+/*   Updated: 2020/03/11 21:46:14 by jungeun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,29 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-int is_foramt(char c)
-{
-}
-
 int ft_printf(const char *str, ...)
 {
 	va_list ap;
-	int idx;
-	int start;
+	t_list *list;
 
-	idx = 0;
-	start = 0;
 	va_start(ap, str);
-	while (str[idx])
-	{
-		if (str[idx] == '%')
-			start = 1;
-		else if (start && ft_strchr("cspdiuxX", str[idx]))
-		{
-			printf("%d", va_arg(ap, int));
-			start = 0;
-		}
-		else if (start && ft_strchr("-0.*", str[idx]))
-		{
-		}
-		else if (!start)
-			write(1, &str[idx], 1);
-		else
-			break;
-		++idx;
-	}
+
+	if ((list = parsing(ap, str)) == 0)
+		return (0);
+	// print(list);
 	// va_copy();
 	va_end(ap);
+	ft_lstclear(&list, &free_arg);
 }
 
 #include <stdio.h>
 
 int main()
 {
-	// ft_printf("sdad\n", 241, 241);
-	printf("%*d\n", 241, 241);
+	int n = 241;
+	ft_printf("1%*.*s34%c%-5.*d5%%6\n", 5, 3, "haha", 'a', 2, 241);
+	// printf("1%*.*s34%05d5%%6\n", 5, 3, "241", 241);
+	// printf("1%*.3.1s34%-05d5%%6\n", 5, "241", 241);
+	// printf("1%*s34%05d5%%6\n", 5, "241", 241);
+	// printf("%d", -16.3);
 }
