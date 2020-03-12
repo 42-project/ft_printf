@@ -6,7 +6,7 @@
 /*   By: jungeun <jungeun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 17:29:19 by jungeun           #+#    #+#             */
-/*   Updated: 2020/03/11 21:57:37 by jungeun          ###   ########.fr       */
+/*   Updated: 2020/03/12 19:12:10 by jungeun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int parsing_flags(t_arg *arg, char *str, int *arg_num)
 			arg->precision = ft_atoi(&str[idx + 1]);
 			if (str[idx + 1] == '*')
 				*arg_num = *arg_num + 1;
-			idx += ft_strlen(ft_itoa(arg->precision)) + 1;
+			idx += get_digit(arg->precision) + 1;
 			continue;
 		}
 		else if (str[idx] >= '1' && str[idx] <= '9')
 		{
 			arg->width = ft_atoi(&str[idx]);
-			idx += ft_strlen(ft_itoa(arg->width));
+			idx += get_digit(arg->width);
 			continue;
 		}
 		++idx;
@@ -114,7 +114,7 @@ int arg_to_list(va_list ap, t_arg *arg)
 		arg_num--;
 	}
 	va_copy(arg->arg_value, ap);
-	if (read_arg(ap, arg) == -1)
+	if ((arg->arg_length = read_arg(ap, arg)) == 0)
 		return (-1);
 	return (0);
 }
@@ -136,7 +136,6 @@ t_list *parsing(va_list ap, const char *str)
 			ft_lstclear(&list, &free_arg);
 			return (0);
 		}
-		print_list(p->content);
 		p = p->next;
 	}
 	return (list);
