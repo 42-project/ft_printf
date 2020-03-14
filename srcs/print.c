@@ -6,11 +6,10 @@
 /*   By: jungeun <jungeun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/12 16:06:17 by jungeun           #+#    #+#             */
-/*   Updated: 2020/03/12 19:49:02 by jungeun          ###   ########.fr       */
+/*   Updated: 2020/03/13 00:40:44 by jungeun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 
 void print_arg(t_arg *arg, va_list ap, char specifier)
@@ -26,11 +25,11 @@ void print_arg(t_arg *arg, va_list ap, char specifier)
 	else if (specifier == 'i')
 		print_int(arg, ap);
 	else if (specifier == 'u')
-		print_unsigned_int(arg, ap);
+		print_unsigned(arg, ap, 10, 0);
 	else if (specifier == 'x')
-		print_hex(arg, ap, 0);
+		print_unsigned(arg, ap, 16, 0);
 	else if (specifier == 'X')
-		print_hex(arg, ap, 1);
+		print_unsigned(arg, ap, 16, 1);
 }
 
 void print(t_list *list)

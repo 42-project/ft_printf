@@ -6,11 +6,10 @@
 /*   By: jungeun <jungeun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 17:29:19 by jungeun           #+#    #+#             */
-/*   Updated: 2020/03/12 19:12:10 by jungeun          ###   ########.fr       */
+/*   Updated: 2020/03/14 23:24:48 by jungeun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 
 void make_list(t_list **list, const char *str)
@@ -95,23 +94,26 @@ int str_to_list(t_arg *arg)
 
 int arg_to_list(va_list ap, t_arg *arg)
 {
-	char *type;
-	int arg_num;
-
-	arg_num = arg->arg_num;
-	if (arg_num == 0 || arg->specifier == '%')
+	if (arg->arg_num == 0 || arg->specifier == '%')
 		return (0);
-	if (arg_num == 3)
+	if (arg->arg_num == 3)
 	{
 		if ((arg->width = va_arg(ap, int)) < 0)
-			return (-1);
-		arg_num--;
-	}
-	if (arg_num == 2)
-	{
+			arg->width = 0;
 		if ((arg->precision = va_arg(ap, int)) < 0)
-			return (-1);
-		arg_num--;
+			arg->precision = 0;
+	}
+	else if (arg->arg_num == 2)
+	{
+		if (is_precision_arg(arg->arg_str))
+		{
+			if ((arg->precision = va_arg(ap, int)) < 0)
+				arg->precision = 0;
+		}
+		else if ((arg->width = va_arg(ap, int)) < 0)
+		{
+			arg->width = 0;
+		}
 	}
 	va_copy(arg->arg_value, ap);
 	if ((arg->arg_length = read_arg(ap, arg)) == 0)

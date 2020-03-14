@@ -6,11 +6,10 @@
 /*   By: jungeun <jungeun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 18:14:36 by jungeun           #+#    #+#             */
-/*   Updated: 2020/03/12 19:19:09 by jungeun          ###   ########.fr       */
+/*   Updated: 2020/03/13 23:14:43 by jungeun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 
 void init_arg(t_arg *arg)
